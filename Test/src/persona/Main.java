@@ -8,5 +8,8 @@ public class Main {
 		
 		System.out.println(persona1.getNombre());
 		
+		Persona cliente1 = new Cliente(25, "Carlos", "Pérez Ruiz", "12345678A", 1.80, 150.75);
+		
+		System.out.println(cliente1.getNombre());
 	}
 }
