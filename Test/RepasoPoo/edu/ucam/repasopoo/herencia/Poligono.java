@@ -2,6 +2,7 @@ package edu.ucam.repasopoo.herencia;
 
 public abstract class Poligono {
 	
+	@SuppressWarnings("unused")
 	private int lados;
 
 	public abstract int getLados();
