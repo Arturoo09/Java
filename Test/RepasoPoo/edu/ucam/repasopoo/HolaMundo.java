@@ -2,8 +2,9 @@ package edu.ucam.repasopoo;
 
 public class HolaMundo {
 
-	public static void main(String[] args) {
-		System.out.println("Hello World!!");
+	public HolaMundo() {}
+	
+	public void saludar() {
+		System.out.println("Hola Mundo!!");
 	}
-
 }
