@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="Networks_Demo"/>
 	<classpathentry kind="src" path="RepasoPoo"/>
 	<classpathentry kind="src" path="HilosSimple"/>
+	<classpathentry kind="src" path="HilosSync"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
