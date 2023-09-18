@@ -1,9 +1,12 @@
 package edu.ucam.hilos.back;
 
-public class MiHilo extends Thread {
+public class MiHilo2 extends Thread {
+	private String threadWord;
 
-	public MiHilo() {}
-	
+	public MiHilo2(String threadWord) {
+		this.threadWord = threadWord;
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -13,11 +16,11 @@ public class MiHilo extends Thread {
 					return;
 				}
 
-				System.out.println("Hilo1: " + i);
+				System.out.println("Hilo2: " + threadWord);
 				Thread.sleep(1000);
 			}
 		} catch (InterruptedException e) {
-			System.out.println("Hilo1 interrumpido.");
+			System.out.println("Hilo2 interrumpido.");
 		}
 	}
 }
