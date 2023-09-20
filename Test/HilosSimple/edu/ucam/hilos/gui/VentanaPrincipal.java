@@ -50,15 +50,9 @@ public class VentanaPrincipal extends JFrame {
         btnParar.setBounds(176, 297, 156, 59);
         contentPane.add(btnParar);
         
-        textArea = new JTextArea();
-        textArea.setBounds(10, 54, 487, 232);
-        contentPane.add(textArea);
-        
         JComboBox<String> comboBox = new JComboBox<>(NombreHilos.getNombreHilosArray());
         comboBox.setBounds(10, 11, 322, 32);
         contentPane.add(comboBox);
-        
-        OutputTextArea outputTextArea = new OutputTextArea(textArea);
         
         JButton btnLimpiar = new JButton("Limpiar");
         btnLimpiar.addActionListener(new ActionListener() {
@@ -68,7 +62,7 @@ public class VentanaPrincipal extends JFrame {
         });
         btnLimpiar.setFont(new Font(FONTNAME, Font.BOLD, 14));
         btnLimpiar.setBackground(SystemColor.scrollbar);
-        btnLimpiar.setBounds(341, 297, 156, 59);
+        btnLimpiar.setBounds(341, 297, 156, 25);
         contentPane.add(btnLimpiar);
         
         JButton btnEjecutarUno = new JButton("EJECUTAR UNO");
@@ -77,10 +71,34 @@ public class VentanaPrincipal extends JFrame {
         btnEjecutarUno.setBounds(342, 11, 155, 32);
         contentPane.add(btnEjecutarUno);
         
+        buttonEjecutarUno = new ButtonEjecutarUno(comboBox, hilos);
+        
+        JButton btnArray = new JButton("Mostrar Array");
+        btnArray.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if (hilos.isEmpty())
+        			System.out.println("Array empty");
+        		
+        		for (Thread thread : hilos) {
+					System.out.println(thread);
+				}
+        	}
+        });
+        btnArray.setFont(new Font(FONTNAME, Font.BOLD, 14));
+        btnArray.setBackground(SystemColor.scrollbar);
+        btnArray.setBounds(341, 331, 156, 25);
+        contentPane.add(btnArray);
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(10, 54, 487, 232);
+        contentPane.add(scrollPane);
+        
+        textArea = new JTextArea();
+        scrollPane.setViewportView(textArea);
+        
+        OutputTextArea outputTextArea = new OutputTextArea(textArea);
         PrintStream printStream = new PrintStream(outputTextArea);
         System.setOut(printStream);
-        
-        buttonEjecutarUno = new ButtonEjecutarUno(comboBox, hilos);
         
         
         btnEjecutarUno.addActionListener(buttonEjecutarUno);

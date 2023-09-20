@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import edu.ucam.hilossinarray.back.Hilo1;
 import edu.ucam.hilossinarray.back.Hilo2;
 import edu.ucam.hilossinarray.back.NombresHilos;
+import javax.swing.JScrollPane;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -57,15 +58,9 @@ public class VentanaPrincipal extends JFrame {
         btnParar.setBounds(176, 297, 156, 59);
         contentPane.add(btnParar);
         
-        textArea = new JTextArea();
-        textArea.setBounds(10, 54, 487, 232);
-        contentPane.add(textArea);
-        
         JComboBox<String> comboBox = new JComboBox<>(NombresHilos.getNombreHilosArray());
         comboBox.setBounds(10, 11, 322, 32);
         contentPane.add(comboBox);
-        
-        OutputTextArea outputTextArea = new OutputTextArea(textArea);
         
         JButton btnLimpiar = new JButton("Limpiar");
         btnLimpiar.addActionListener(new ActionListener() {
@@ -84,10 +79,18 @@ public class VentanaPrincipal extends JFrame {
         btnEjecutarUno.setBounds(342, 11, 155, 32);
         contentPane.add(btnEjecutarUno);
         
+        botonEjecutarUno = new BotonEjecutarUno(comboBox, hilo1, hilo2, botonParar);
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(10, 54, 487, 232);
+        contentPane.add(scrollPane);
+        
+        textArea = new JTextArea();
+        scrollPane.setViewportView(textArea);
+        
+        OutputTextArea outputTextArea = new OutputTextArea(textArea);
         PrintStream printStream = new PrintStream(outputTextArea);
         System.setOut(printStream);
-        
-        botonEjecutarUno = new BotonEjecutarUno(comboBox, hilo1, hilo2, botonParar);
         
         
         btnEjecutarUno.addActionListener(botonEjecutarUno);
