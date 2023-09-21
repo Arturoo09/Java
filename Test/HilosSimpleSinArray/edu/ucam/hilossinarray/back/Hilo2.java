@@ -10,7 +10,7 @@ public class Hilo2 extends Thread {
 	@Override
 	public void run() {
 		try {
-			for (int i = 1; i <= 5; i++) {
+			for (int i = 1; i <= 50; i++) {
 
 				if (Thread.interrupted()) {
 					return;

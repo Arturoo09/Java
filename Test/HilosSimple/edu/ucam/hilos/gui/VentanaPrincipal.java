@@ -22,23 +22,21 @@ public class VentanaPrincipal extends JFrame {
     private ButtonPara buttonParar;
     private JTextArea textArea;
     private ButtonEjecutarUno buttonEjecutarUno;
+    private ButtonPararUno buttonPararUno;
     
     private List<Thread> hilos = new ArrayList<>();
     
     public VentanaPrincipal() {
     	
-    	buttonEjecutar = new ButtonEjecutar(hilos);
-    	buttonParar = new ButtonPara(hilos);
-    	
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBounds(100, 100, 523, 406);
+        setBounds(100, 100, 523, 505);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
 
         JButton btnEjecutar = new JButton("EJECUTAR TODOS");
-        btnEjecutar.setBounds(10, 297, 156, 59);
+        btnEjecutar.setBounds(10, 396, 156, 59);
         contentPane.setLayout(null);
         btnEjecutar.setBackground(SystemColor.scrollbar);
         btnEjecutar.setFont(new Font(FONTNAME, Font.BOLD, 14));
@@ -47,7 +45,7 @@ public class VentanaPrincipal extends JFrame {
         JButton btnParar = new JButton("PARAR");
         btnParar.setFont(new Font(FONTNAME, Font.BOLD, 14));
         btnParar.setBackground(SystemColor.scrollbar);
-        btnParar.setBounds(176, 297, 156, 59);
+        btnParar.setBounds(176, 396, 156, 59);
         contentPane.add(btnParar);
         
         JComboBox<String> comboBox = new JComboBox<>(NombreHilos.getNombreHilosArray());
@@ -62,16 +60,14 @@ public class VentanaPrincipal extends JFrame {
         });
         btnLimpiar.setFont(new Font(FONTNAME, Font.BOLD, 14));
         btnLimpiar.setBackground(SystemColor.scrollbar);
-        btnLimpiar.setBounds(341, 297, 156, 25);
+        btnLimpiar.setBounds(341, 396, 156, 25);
         contentPane.add(btnLimpiar);
         
         JButton btnEjecutarUno = new JButton("EJECUTAR UNO");
         btnEjecutarUno.setFont(new Font(FONTNAME, Font.BOLD, 14));
         btnEjecutarUno.setBackground(SystemColor.scrollbar);
-        btnEjecutarUno.setBounds(342, 11, 155, 32);
+        btnEjecutarUno.setBounds(342, 10, 155, 32);
         contentPane.add(btnEjecutarUno);
-        
-        buttonEjecutarUno = new ButtonEjecutarUno(comboBox, hilos);
         
         JButton btnArray = new JButton("Mostrar Array");
         btnArray.addActionListener(new ActionListener() {
@@ -86,23 +82,41 @@ public class VentanaPrincipal extends JFrame {
         });
         btnArray.setFont(new Font(FONTNAME, Font.BOLD, 14));
         btnArray.setBackground(SystemColor.scrollbar);
-        btnArray.setBounds(341, 331, 156, 25);
+        btnArray.setBounds(341, 430, 156, 25);
         contentPane.add(btnArray);
         
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 54, 487, 232);
+        scrollPane.setBounds(10, 96, 487, 289);
         contentPane.add(scrollPane);
         
         textArea = new JTextArea();
         scrollPane.setViewportView(textArea);
         
         OutputTextArea outputTextArea = new OutputTextArea(textArea);
+        
+        JButton btnPararHilosArray = new JButton("PARAR HILO");
+        btnPararHilosArray.setFont(new Font(FONTNAME, Font.BOLD, 14));
+        btnPararHilosArray.setBackground(SystemColor.scrollbar);
+        btnPararHilosArray.setBounds(341, 53, 155, 32);
+        contentPane.add(btnPararHilosArray);
+        
+        JComboBox<Thread> comboBox_1 = new JComboBox<>();
+        comboBox_1.setBounds(10, 54, 322, 31);
+        contentPane.add(comboBox_1);
+        
+        
         PrintStream printStream = new PrintStream(outputTextArea);
         System.setOut(printStream);
         
+        buttonEjecutar = new ButtonEjecutar(hilos, comboBox_1);
+    	buttonParar = new ButtonPara(hilos);
+    	buttonEjecutarUno = new ButtonEjecutarUno(comboBox, hilos, comboBox_1);
+    	buttonPararUno = new ButtonPararUno(comboBox_1);
+    	
         
         btnEjecutarUno.addActionListener(buttonEjecutarUno);
         btnEjecutar.addActionListener(buttonEjecutar);
         btnParar.addActionListener(buttonParar);
+        btnPararHilosArray.addActionListener(buttonPararUno);
     }
 }

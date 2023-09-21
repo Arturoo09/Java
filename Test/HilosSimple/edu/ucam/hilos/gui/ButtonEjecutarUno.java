@@ -15,11 +15,13 @@ public class ButtonEjecutarUno implements ActionListener {
 	private MiHilo hilo1;
     private MiHilo2 hilo2;
     private JComboBox<String> comboBox;
+    private JComboBox<Thread> comboBox1;
 	private List<Thread> hilos;
     
-    public ButtonEjecutarUno(JComboBox<String> comboBox, List<Thread> hilos) {
+    public ButtonEjecutarUno(JComboBox<String> comboBox, List<Thread> hilos, JComboBox<Thread> comboBox1) {
         this.comboBox = comboBox;
         this.hilos = hilos;
+        this.comboBox1 = comboBox1;
     }
 	
 	@Override
@@ -31,10 +33,12 @@ public class ButtonEjecutarUno implements ActionListener {
 				hilo1 = new MiHilo();
 				hilo1.start();
 				hilos.add(hilo1);
+				comboBox1.addItem(hilo1);
 			} else if (selectedThread.equals(NombreHilos.HILO_2.getNombreHilo())) {
 				hilo2 = new MiHilo2("Studying...");
 				hilo2.start();
 				hilos.add(hilo2);
+				comboBox1.addItem(hilo2);
 			}
 		}
 		
