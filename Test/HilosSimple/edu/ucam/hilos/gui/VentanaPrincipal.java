@@ -109,7 +109,7 @@ public class VentanaPrincipal extends JFrame {
         System.setOut(printStream);
         
         buttonEjecutar = new ButtonEjecutar(hilos, comboBox_1);
-    	buttonParar = new ButtonPara(hilos);
+    	buttonParar = new ButtonPara(hilos, comboBox_1);
     	buttonEjecutarUno = new ButtonEjecutarUno(comboBox, hilos, comboBox_1);
     	buttonPararUno = new ButtonPararUno(comboBox_1);
     	

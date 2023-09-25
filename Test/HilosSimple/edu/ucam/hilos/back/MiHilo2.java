@@ -23,4 +23,8 @@ public class MiHilo2 extends Thread {
 			System.out.println("Hilo2 interrumpido.");
 		}
 	}
+	@Override
+    public String toString() {
+        return "MiHilo2 {Nombre: " + getName() + ", ID: " + getId() + "}";
+    }
 }
