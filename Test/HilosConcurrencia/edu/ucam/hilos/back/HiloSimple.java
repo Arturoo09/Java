@@ -29,10 +29,8 @@ public class HiloSimple extends Thread {
 	            System.out.println("Mi delay es de: " + this.delay);
 	            this.contador.sumaUno();
 	            
-	            javax.swing.SwingUtilities.invokeLater(new Runnable() {
-	                public void run() {
-	                	defaultTableModel.setValueAt(contador.getContador(), rowIndex, 1); 
-	                }
+	            javax.swing.SwingUtilities.invokeLater(() -> {
+	                defaultTableModel.setValueAt(contador.getContador(), rowIndex, 1);
 	            });
 
 	            sleep(this.delay);
@@ -50,42 +48,4 @@ public class HiloSimple extends Thread {
 	public String toString() {
 		return "ID=" + id + ", Contador=" + contador;
 	}
-
-	public long getDelay() {
-		return delay;
-	}
-
-	public void setDelay(long delay) {
-		this.delay = delay;
-	}
-
-	public int getTimes() {
-		return times;
-	}
-
-	public void setTimes(int times) {
-		this.times = times;
-	}
-
-	@Override
-	public long getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Contador getContador() {
-		return contador;
-	}
-
-	public void setContador(Contador contador) {
-		this.contador = contador;
-	}
-
-	public static int getForEver() {
-		return FOR_EVER;
-	}
-	
 }
