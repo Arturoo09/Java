@@ -1,28 +1,42 @@
 package edu.ucam.hilos.back;
 
+import javax.swing.table.DefaultTableModel;
+
 public class HiloSimple extends Thread {
 	
 	public static final int FOR_EVER = -1;
 	protected long delay;
 	protected int times;
-	private int id = 0;
 	private Contador contador;
-	
-	public HiloSimple(long delay, int times, Contador contador) {
-		this.delay = delay;
-		this.times = times;
-		this.contador = contador;
-		this.id++;
+	private static int currentId = 0;
+	private int id;
+	private DefaultTableModel defaultTableModel;
+	private int rowIndex;
+
+	public HiloSimple(long delay, int times, Contador contador, DefaultTableModel defaultTableModel, int rowIndex) {
+	    this.delay = delay;
+	    this.times = times;
+	    this.contador = contador;
+	    this.id = currentId++;
+	    this.defaultTableModel = defaultTableModel;
+	    this.rowIndex = rowIndex;
 	}
 	
 	@Override
 	public void run() {
 		try {
-			for (int aux = this.times; (this.times >= 0) || (aux == HiloSimple.FOR_EVER); this.times--) {
-				System.out.println("Mi delay es de: " + this.delay);
-				this.contador.sumaUno();
-				sleep(this.delay);
-			}
+			for (int aux = 0; aux < times || times == FOR_EVER; aux++) {
+	            System.out.println("Mi delay es de: " + this.delay);
+	            this.contador.sumaUno();
+	            
+	            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+	                public void run() {
+	                	defaultTableModel.setValueAt(contador.getContador(), rowIndex, 1); 
+	                }
+	            });
+
+	            sleep(this.delay);
+	        }
 			
 			System.out.println("Contador:  " + this.contador.getContador());
 		} catch (Exception e) {
@@ -30,6 +44,11 @@ public class HiloSimple extends Thread {
 			System.err.println();
 			System.err.println(e);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "ID=" + id + ", Contador=" + contador;
 	}
 
 	public long getDelay() {
