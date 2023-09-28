@@ -31,7 +31,8 @@ public class Ventana extends JFrame implements EventListener{
     private MiTabla tableModel;
     private JTextArea textArea;
     private int contadorBotonPresionado = 0;
-    private JLabel lblContador;
+    private JLabel lblContadorHilos;
+    private JLabel lblContadorTotal;
     private JTextField txtDelay;
     private JTextField txtTimes;
     
@@ -57,10 +58,10 @@ public class Ventana extends JFrame implements EventListener{
 		btnLanzarDefault.setBounds(439, 153, 148, 41);
 		contentPane.add(btnLanzarDefault);
 		
-		lblContador = new JLabel("Contador: 0");
-		lblContador.setFont(new Font(FONT, Font.PLAIN, 25));
-		lblContador.setBounds(510, 45, 182, 41);
-		contentPane.add(lblContador);
+		lblContadorHilos = new JLabel("Contador Hilos: 0");
+		lblContadorHilos.setFont(new Font(FONT, Font.PLAIN, 25));
+		lblContadorHilos.setBounds(429, 11, 366, 30);
+		contentPane.add(lblContadorHilos);
 		
 		tableModel = new MiTabla();
 		hiloTable = new JTable(tableModel);
@@ -114,16 +115,33 @@ public class Ventana extends JFrame implements EventListener{
         botonLanzarHiloDefault = new BotonLanzarHiloDefault(tableModel);
 		botonLanzarHilo = new BotonLanzarHilo(tableModel, txtDelay, txtTimes);
 		
+		lblContadorTotal = new JLabel("Contador Total: 0");
+		lblContadorTotal.setFont(new Font(FONT, Font.PLAIN, 25));
+		lblContadorTotal.setBounds(429, 52, 366, 30);
+		contentPane.add(lblContadorTotal);
+		
 		btnLanzar.addActionListener(botonLanzarHilo);
 		btnLanzarDefault.addActionListener(botonLanzarHiloDefault);
 		
 		botonLanzarHilo.addBotonPresionadoListener(this);
 		botonLanzarHiloDefault.addBotonPresionadoListener(this);
+		tableModel.setEventListener(this);
 	}
 
 	@Override
-	public void update() {
+	public void updateContadorHilo() {
 		contadorBotonPresionado++;
-		lblContador.setText("Contador: " + contadorBotonPresionado);
+		lblContadorHilos.setText("Contador Hilos: " + contadorBotonPresionado);
+	}
+
+	@Override
+	public void updateContadorTotal() {
+		int contadorTotal = 0;
+	    for (int i = 0; i < tableModel.getRowCount(); i++) {
+	        if (tableModel.getValueAt(i, 1) != null) {
+	        	contadorTotal += (int) tableModel.getValueAt(i, 1);
+	        }
+	    }
+	    lblContadorTotal.setText("Contador Total: " + contadorTotal);
 	}
 }

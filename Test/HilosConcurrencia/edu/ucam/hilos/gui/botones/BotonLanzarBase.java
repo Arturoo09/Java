@@ -23,7 +23,7 @@ public abstract class BotonLanzarBase implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Contador contador = new Contador();
         
-        ((MiTabla) tableModel).addHilo("Hilo-" + (tableModel.getRowCount() + 1), contador.getContador());
+        tableModel.addHilo("Hilo-" + (tableModel.getRowCount() + 1), contador.getContador());
         int rowIndex = tableModel.getRowCount() - 1;
         
         int delay = getDelay();
@@ -32,7 +32,7 @@ public abstract class BotonLanzarBase implements ActionListener {
         HiloSimple hilo = new HiloSimple(delay, times, contador, tableModel, rowIndex);
         hilo.start();
         
-        fireBotonPresionadoEvent();
+        botonPresionadoEvent();
         postAction();
     }
     
@@ -50,9 +50,9 @@ public abstract class BotonLanzarBase implements ActionListener {
         listeners.remove(listener);
     }
     
-    private void fireBotonPresionadoEvent() {
+    private void botonPresionadoEvent() {
         for (EventListener listener : listeners) {
-            listener.update();
+            listener.updateContadorHilo();
         }
     }
 }

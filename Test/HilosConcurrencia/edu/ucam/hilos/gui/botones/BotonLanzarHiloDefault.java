@@ -4,8 +4,8 @@ import edu.ucam.hilos.gui.tabla.MiTabla;
 
 public class BotonLanzarHiloDefault extends BotonLanzarBase {
 
-    private static final int DEFAULT_DELAY = 250;
-    private static final int DEFAULT_TIMES = 10000;
+    private static final int DEFAULT_DELAY = 75;
+    private static final int DEFAULT_TIMES = 100;
 
     public BotonLanzarHiloDefault(MiTabla tableModel) {
         super(tableModel);
