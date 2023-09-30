@@ -11,7 +11,6 @@ public class GestorHilos {
     private List<HiloSimple> hilosActivos = new ArrayList<>();
     private List<ListaHilosObserver> observers = new ArrayList<>();
     
-    @SuppressWarnings("unused")
 	private EventListener eventListener;
 
     public void setEventListener(EventListener listener) {
