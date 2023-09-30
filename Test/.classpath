@@ -11,7 +11,7 @@
 	<classpathentry kind="src" path="HilosSync"/>
 	<classpathentry kind="src" path="HilosProdCons"/>
 	<classpathentry kind="src" path="HilosSimpleSinArray"/>
-	<classpathentry kind="src" path="HilosConcurrencia"/>
 	<classpathentry kind="src" path="Tests"/>
+	<classpathentry kind="src" path="HilosConcurrencia2"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

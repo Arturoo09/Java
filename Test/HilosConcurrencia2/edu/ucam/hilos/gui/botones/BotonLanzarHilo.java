@@ -1,6 +1,7 @@
 package edu.ucam.hilos.gui.botones;
 
 import javax.swing.JTextField;
+import edu.ucam.hilos.back.GestorHilos;
 import edu.ucam.hilos.gui.tabla.MiTabla;
 
 
@@ -9,8 +10,8 @@ public class BotonLanzarHilo extends BotonLanzarBase {
     private JTextField txtDelay;
     private JTextField txtTimes;
 
-    public BotonLanzarHilo(MiTabla tableModel, JTextField txtDelay, JTextField txtTimes) {
-        super(tableModel);
+    public BotonLanzarHilo(MiTabla tableModel, GestorHilos gestorHilos, JTextField txtDelay, JTextField txtTimes) {
+        super(tableModel, gestorHilos);
         this.txtDelay = txtDelay;
         this.txtTimes = txtTimes;
     }
@@ -23,12 +24,20 @@ public class BotonLanzarHilo extends BotonLanzarBase {
     
     @Override
     protected int getDelay() {
-        return Integer.parseInt(txtDelay.getText());
+    	try {
+    		return Integer.parseInt(txtDelay.getText());
+		} catch (NumberFormatException e) {
+			return 0;
+		}
     }
 
     @Override
     protected int getTimes() {
-        return Integer.parseInt(txtTimes.getText());
+        try {
+        	return Integer.parseInt(txtTimes.getText());
+		} catch (NumberFormatException e) {
+			return 0;
+		}
     }
 }
 

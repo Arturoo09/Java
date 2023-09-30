@@ -6,30 +6,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ucam.hilos.back.Contador;
+import edu.ucam.hilos.back.GestorHilos;
 import edu.ucam.hilos.back.HiloSimple;
 import edu.ucam.hilos.gui.EventListener;
 import edu.ucam.hilos.gui.tabla.MiTabla;
 
-public abstract class BotonLanzarBase implements ActionListener {
+public abstract class BotonLanzarBase extends BotonBase implements ActionListener {
 
-    protected List<EventListener> listeners = new ArrayList<>();
-    protected MiTabla tableModel;
+    protected BotonLanzarBase(MiTabla tableModel, GestorHilos gestorHilos) {
+		super(tableModel, gestorHilos);
+	}
 
-    protected BotonLanzarBase(MiTabla tableModel) {
-        this.tableModel = tableModel;
-    }
+	protected List<EventListener> listeners = new ArrayList<>();
     
     @Override
     public void actionPerformed(ActionEvent e) {
         Contador contador = new Contador();
         
-        tableModel.addHilo("Hilo-" + (tableModel.getRowCount() + 1), contador.getContador());
-        int rowIndex = tableModel.getRowCount() - 1;
-        
         int delay = getDelay();
         int times = getTimes();
         
-        HiloSimple hilo = new HiloSimple(delay, times, contador, tableModel, rowIndex);
+        HiloSimple hilo = new HiloSimple(delay, times, contador, tableModel, tableModel.getRowCount());
+        gestorHilos.addHilo(hilo, contador.getContador());
         hilo.start();
         
         botonPresionadoEvent();

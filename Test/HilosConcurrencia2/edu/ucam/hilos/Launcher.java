@@ -1,7 +1,6 @@
 package edu.ucam.hilos;
 
 import java.awt.EventQueue;
-
 import edu.ucam.hilos.gui.Ventana;
 
 public class Launcher {
