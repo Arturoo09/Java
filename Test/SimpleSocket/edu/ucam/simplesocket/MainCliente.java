@@ -7,11 +7,10 @@ import edu.ucam.simplesocket.cliente.Cliente;
 public class MainCliente {
 
 	public static void main(String[] args) throws IOException {
-		Cliente cli = new Cliente();
+		Cliente client = new Cliente();
 		
 		System.out.println("Iniciando cliente\n");
 		
-		cli.startClient();
+		client.start();
 	}
-
 }

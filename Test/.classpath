@@ -14,5 +14,6 @@
 	<classpathentry kind="src" path="Tests"/>
 	<classpathentry kind="src" path="HilosConcurrencia2"/>
 	<classpathentry kind="src" path="SimpleSocket"/>
+	<classpathentry kind="src" path="SimpleSocketProf"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

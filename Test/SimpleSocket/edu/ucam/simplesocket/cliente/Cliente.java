@@ -1,28 +1,39 @@
 package edu.ucam.simplesocket.cliente;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Scanner;
 
 import edu.ucam.simplesocket.conexion.Conexion;
 
-public class Cliente extends Conexion{
+public class Cliente extends Conexion {
+    public Cliente() throws IOException {
+        super("cliente");
+    }
 
-	public Cliente() throws IOException {
-		super("cliente");
-	}
-	
-	public void startClient() {
-		try {
-			salidaServidor = new DataOutputStream(cs.getOutputStream());
-			
-			for ( int i = 0; i < 2; i++) {
-				salidaServidor.writeUTF("Este es el mensaje número " + (i+1) + "\n");
+    public void start() {
+        try {
+            inicializarFlujosCliente();
+            
+            String lineaLeida = "";
+			try (Scanner teclado = new Scanner(System.in)) {
+				while (true) {
+				    lineaLeida = teclado.nextLine();
+				    salidaCliente.println(lineaLeida);
+				    salidaCliente.flush();
+
+				    String respuestaServidor = bufferCliente.readLine();
+				    if (respuestaServidor != null) {
+				        System.out.println("> " + respuestaServidor);
+				        if (respuestaServidor.equalsIgnoreCase("Desconectado")) {
+				            System.out.println("Desconectado por el servidor.");
+				            break;
+				        }
+				    }
+				}
 			}
-			
-			cs.close();
-		}catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
 
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
