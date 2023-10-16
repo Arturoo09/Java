@@ -5,14 +5,17 @@ import java.util.Scanner;
 
 import edu.ucam.simplesocket.conexion.Conexion;
 
-public class Cliente extends Conexion {
+public class Cliente extends Conexion{
+	
     public Cliente() throws IOException {
         super("cliente");
     }
 
     public void start() {
         try {
-            inicializarFlujosCliente();
+            
+        	bufferCliente = inicializarBufferLectura(cs);
+        	salidaCliente = inicializarBufferEscritura(cs);
             
             String lineaLeida = "";
 			try (Scanner teclado = new Scanner(System.in)) {
@@ -31,6 +34,8 @@ public class Cliente extends Conexion {
 				    }
 				}
 			}
+			
+			cs.close();
 
         } catch (Exception e) {
             System.out.println(e);

@@ -15,10 +15,10 @@ public class Conexion {
 	protected String mensajeServidor;
 	protected ServerSocket ss;
 	protected Socket cs;
-    protected PrintWriter salidaServidor = null;
-    protected PrintWriter salidaCliente = null;
+	protected PrintWriter salidaCliente = null;
     protected BufferedReader bufferCliente = null;	
-    protected BufferedReader bufferServidor = null;
+    protected PrintWriter salidaServidor = null;
+	protected BufferedReader bufferServidor = null;
 	
 	public Conexion(String tipo) throws IOException{
 		if (tipo.equalsIgnoreCase("servidor")) {
@@ -29,13 +29,11 @@ public class Conexion {
 		}
 	}
 	
-	public void inicializarFlujosServidor(Socket cs) throws IOException {
-		bufferServidor = new BufferedReader(new InputStreamReader(cs.getInputStream()));
-		salidaServidor = new PrintWriter(new OutputStreamWriter(cs.getOutputStream()));
+	public BufferedReader inicializarBufferLectura(Socket cs) throws IOException {
+        return new BufferedReader(new InputStreamReader(cs.getInputStream()));
     }
-	
-	public void inicializarFlujosCliente() throws IOException {
-		bufferCliente = new BufferedReader(new InputStreamReader(cs.getInputStream()));
-		salidaCliente = new PrintWriter(new OutputStreamWriter(cs.getOutputStream()));
+
+    public PrintWriter inicializarBufferEscritura(Socket cs) throws IOException {
+        return new PrintWriter(new OutputStreamWriter(cs.getOutputStream()));
     }
 }
