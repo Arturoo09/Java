@@ -17,7 +17,6 @@ public class Servidor extends Conexion{
 	
 	public void start() {
 		try {
-			
 			while (true) {
 				System.out.println("Esperando conexion...");
 				
@@ -36,5 +35,4 @@ public class Servidor extends Conexion{
 			System.out.println(e);
 		}
 	}
-
 }

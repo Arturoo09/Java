@@ -11,10 +11,9 @@
 	<classpathentry kind="src" path="HilosSync"/>
 	<classpathentry kind="src" path="HilosProdCons"/>
 	<classpathentry kind="src" path="HilosSimpleSinArray"/>
-	<classpathentry kind="src" path="Tests"/>
 	<classpathentry kind="src" path="HilosConcurrencia2"/>
 	<classpathentry kind="src" path="SimpleSocket"/>
-	<classpathentry kind="src" path="SimpleSocketProf"/>
+	<classpathentry kind="src" path="Chat"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
