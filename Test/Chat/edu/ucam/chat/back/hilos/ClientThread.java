@@ -29,17 +29,19 @@ public class ClientThread extends Thread{
 			out.println("¡Bienvenido al chat, " + clientName + "!");
 			
 			String message;
+			String messageExit = " HA SALIDO DEL CHAT";
             while (scanner.hasNextLine()) {
                 message = scanner.nextLine();
                 if ("salir".equalsIgnoreCase(message.trim())) {
                     System.out.println("Cliente " + clientName + " ha salido.");
+                    serverInstance.broadcast(messageExit, clientSocket, 1);
                     break;
                 }
                 
-                System.out.println("\nCliente de nombre:" + clientName + "\nCon Address: " + clientSocket.getRemoteSocketAddress());
-                System.out.println("A enviado: " + message + "\n\n");
+                System.out.println("\nCliente de nombre: " + clientName + "\nCon Address: " + clientSocket.getRemoteSocketAddress());
+                System.out.println("A enviado: " + message);
                 
-                serverInstance.broadcast(message, clientSocket);
+                serverInstance.broadcast(message, clientSocket, 0);
             }
 			
 		} catch (Exception e) {

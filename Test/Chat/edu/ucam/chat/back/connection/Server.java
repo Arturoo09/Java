@@ -14,14 +14,21 @@ public class Server extends Connection{
 		super("Servidor");
 	}
 	
-	public void broadcast(String message, Socket sender) {
+	public void broadcast(String message, Socket sender, int flag) {
 		String clientName = this.getClientName(sender);
 		String formattedMessage = clientName + ": " + message;
+		String formattedMessageExit = clientName + message;
+		
 		for(Map.Entry<Socket, PrintWriter> entry : clientMap.entrySet()) {
 			Socket socket = entry.getKey();
 			PrintWriter outPrintWriter = entry.getValue();
 			
 			if (socket != sender) {
+				if (flag != 0) {
+					outPrintWriter.println(formattedMessageExit);
+				    outPrintWriter.flush();
+				    continue;
+				}
 			    outPrintWriter.println(formattedMessage);
 			    outPrintWriter.flush();
 			}
