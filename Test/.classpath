@@ -14,6 +14,12 @@
 	<classpathentry kind="src" path="HilosConcurrencia2"/>
 	<classpathentry kind="src" path="SimpleSocket"/>
 	<classpathentry kind="src" path="Chat"/>
+	<classpathentry kind="src" path="httpPrueba"/>
+	<classpathentry kind="src" path="PracticaFinalDAD"/>
+	<classpathentry kind="src" path="IMAP_Test"/>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="C:/Users/34625/Downloads/mysql-connector-j-8.1.0.zip"/>
+	<classpathentry kind="lib" path="C:/Users/34625/Downloads/mysql-connector-j-8.1.0/mysql-connector-j-8.1.0/mysql-connector-j-8.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -55,7 +55,7 @@ public class Server extends Connection{
 		this.clientNames.put(clientSocket, name);
 	}
 
-	public void start() {
+	public void start() throws IOException {
 		try {
 			System.out.println("======================================");
 			System.out.println("|    Server iniciado en el " + Connection.getPort() + "	     |");
@@ -75,6 +75,8 @@ public class Server extends Connection{
 			
 		}catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			ss.close();
 		}
 	}
 }

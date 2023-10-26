@@ -31,5 +31,4 @@ public class ListenerThread extends Thread {
 			}
 		}
 	}
-
 }
