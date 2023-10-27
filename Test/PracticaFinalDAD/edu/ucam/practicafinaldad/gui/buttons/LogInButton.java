@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import edu.ucam.practicafinaldad.back.User;
-import edu.ucam.practicafinaldad.back.UserManager;
+import edu.ucam.practicafinaldad.back.Manager;
 import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
 import edu.ucam.practicafinaldad.gui.Home;
 import edu.ucam.practicafinaldad.gui.dialogs.InvalidCredentials;
@@ -23,7 +23,7 @@ public class LogInButton implements ActionListener{
 	private JTextField txtUsername;
     private JPasswordField txtPassword;
     private DatabaseManager dbManager;
-    private UserManager userManager;
+    private Manager userManager;
     private User user;
 	
 	public LogInButton(JTextField txtUsername, JPasswordField txtPassword){
@@ -36,7 +36,7 @@ public class LogInButton implements ActionListener{
             ex.printStackTrace();
         }
 		
-		this.userManager = new UserManager();
+		this.userManager = new Manager("users", "id");
 		
 	}
 	

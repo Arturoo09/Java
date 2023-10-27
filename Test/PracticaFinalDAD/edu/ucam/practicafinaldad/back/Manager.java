@@ -6,20 +6,23 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import edu.ucam.practicafinaldad.back.MailConnections.IMAPConnection;
 import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
 
-public class UserManager implements IUserManager{
+public class Manager implements IManager{
 	
 	private DatabaseManager dbManager;
-	private String table = "users";
-	private String column = "id";
+	private String table;
+	private String column;
 	
-	public UserManager() {
+	public Manager(String table, String column) {
 		try {
             this.dbManager = new DatabaseManager();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+		this.table = table;
+		this.column = column;
 	}
 	
 	@Override
@@ -39,12 +42,12 @@ public class UserManager implements IUserManager{
 	    // Generar un nuevo ID sumando 1 al máximo valor actual
 	    return lastId + 1;
 	}
-
 	
 	@Override
 	public User getUser(String username, String password) throws SQLException {
-	    String query = "SELECT * FROM users WHERE username=? AND password=?";
-	    try (PreparedStatement statement = dbManager.getConnection().prepareStatement(query)) {
+	    String userQuery = "SELECT * FROM users WHERE username=? AND password=?";
+	    User user = null;
+	    try (PreparedStatement statement = dbManager.getConnection().prepareStatement(userQuery)) {
 	        statement.setString(1, username);
 	        statement.setString(2, password);
 
@@ -54,13 +57,31 @@ public class UserManager implements IUserManager{
 	                String dbUsername = resultSet.getString("username");
 	                String dbPassword = resultSet.getString("password");
 	                Boolean admin = resultSet.getBoolean("admin");
-	                return new User(id, dbUsername, dbPassword, admin);
+	                user = new User(id, dbUsername, dbPassword, admin);
 	            }
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    return null; // Usuario no encontrado
-	}
 
+	    if (user != null) {
+	        String imapQuery = "SELECT * FROM user_imap WHERE user_id=?";
+	        try (PreparedStatement statement = dbManager.getConnection().prepareStatement(imapQuery)) {
+	            statement.setString(1, user.getId());
+	            try (ResultSet resultSet = statement.executeQuery()) {
+	                while (resultSet.next()) {
+	                    int imapId = resultSet.getInt("connection_id");
+	                    String email = resultSet.getString("email");
+	                    String pswdMail = resultSet.getString("pswd_mail");
+	                    IMAPConnection imapConnection = new IMAPConnection(imapId, user.getId(), email, pswdMail);
+	                    user.addImapConnection(imapConnection);
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return user;
+	}
 }

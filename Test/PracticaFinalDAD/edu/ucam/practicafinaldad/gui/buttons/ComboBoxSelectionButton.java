@@ -23,10 +23,10 @@ public class ComboBoxSelectionButton implements ActionListener {
 		String selectedOptions = (String) cbxConnections.getSelectedItem();
 		if (selectedOptions != null) {
 			if ("IMAP".equalsIgnoreCase(selectedOptions)) {
-				txtHost.setText("imap.gamil.com");
+				txtHost.setText("imap.gmail.com");
 				txtPort.setText("993");
 			}else if ("SMTP".equalsIgnoreCase(selectedOptions)) {
-				txtHost.setText("smtp.gamil.com");
+				txtHost.setText("smtp.gmail.com");
 				txtPort.setText("587");
 			}else if ("Ninguna".equalsIgnoreCase(selectedOptions)) {
 				txtHost.setText("");

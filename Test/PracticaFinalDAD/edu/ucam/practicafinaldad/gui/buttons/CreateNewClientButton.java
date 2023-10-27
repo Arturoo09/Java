@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
-import edu.ucam.practicafinaldad.back.UserManager;
+import edu.ucam.practicafinaldad.back.Manager;
 import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
 import edu.ucam.practicafinaldad.gui.dialogs.AddNewClient;
 
@@ -18,7 +18,7 @@ public class CreateNewClientButton implements ActionListener {
 	
 	private AddNewClient addNewClient;
 	private DatabaseManager dbManager;
-	private UserManager userManager;
+	private Manager userManager;
 	private JTextField txtUsername;
 	private JTextField txtPassword;
 	private JCheckBox chkbxIsAdmin;
@@ -42,7 +42,7 @@ public class CreateNewClientButton implements ActionListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.userManager = new UserManager();
+		this.userManager = new Manager("users", "id");
 	}
 
 	@Override

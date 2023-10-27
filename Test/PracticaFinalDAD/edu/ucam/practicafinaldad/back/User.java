@@ -1,17 +1,24 @@
 package edu.ucam.practicafinaldad.back;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.ucam.practicafinaldad.back.MailConnections.IMAPConnection;
+
 public class User {
 	
 	private String id;
 	private String username;
 	private String password;
 	private Boolean admin;
+	private List<IMAPConnection> connections; 
 	
 	public User(String id, String username, String password, Boolean admin) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.admin = admin;
+		this.connections = new ArrayList<>();
 	}
 
 	public String getId() {
@@ -45,4 +52,12 @@ public class User {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
+	
+	public List<IMAPConnection> getConnections() {
+        return connections;
+    }
+
+    public void addImapConnection(IMAPConnection connection) {
+        this.connections.add(connection);
+    }
 }

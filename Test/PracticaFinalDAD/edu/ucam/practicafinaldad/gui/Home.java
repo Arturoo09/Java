@@ -6,8 +6,11 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import edu.ucam.practicafinaldad.back.User;
+import edu.ucam.practicafinaldad.back.MailConnections.IMAPConnection;
 import edu.ucam.practicafinaldad.gui.buttons.AddNewClientButton;
 import edu.ucam.practicafinaldad.gui.buttons.ComboBoxSelectionButton;
+import edu.ucam.practicafinaldad.gui.buttons.ComboBoxSelectionConnectionButton;
+import edu.ucam.practicafinaldad.gui.buttons.ConnectionButton;
 import edu.ucam.practicafinaldad.gui.buttons.NewConfigButton;
 
 import javax.swing.JButton;
@@ -17,6 +20,10 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Toolkit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.DefaultComboBoxModel;
 
 public class Home extends JFrame {
@@ -31,11 +38,13 @@ public class Home extends JFrame {
 	private JButton btnConnect;
 	private JComboBox<String> cbxConnections;
 	private JButton btnAddNewClient;
-	
+	private Map<String, IMAPConnection> imapConnectionsMap;
 	private NewConfigButton newConfigButton;
 	private AddNewClientButton addNewClient;
 	private ComboBoxSelectionButton boxSelectionButton;
-
+	private JTextField txtMailPswd;
+	private JTextField txtMail;
+	private ConnectionButton connectionButton;
 
 	/**
 	 * Create HOME.
@@ -45,7 +54,7 @@ public class Home extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\34625\\Imágenes\\logoDAD.png"));
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setBounds(100, 100, 802, 546);
+		setBounds(100, 100, 802, 470);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -54,57 +63,45 @@ public class Home extends JFrame {
 		
 		JButton btnNewConfg = new JButton("NEW CONFIG ");
 		btnNewConfg.setBackground(SystemColor.scrollbar);
-		btnNewConfg.setFont(new Font(FONT, Font.BOLD, 14));
-		btnNewConfg.setBounds(33, 63, 132, 46);
+		btnNewConfg.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
+		btnNewConfg.setBounds(10, 378, 116, 46);
 		contentPane.add(btnNewConfg);
 		
 		cbxConnections = new JComboBox<>();
-		cbxConnections.setEnabled(false);
-		cbxConnections.setVisible(false);
 		cbxConnections.setModel(new DefaultComboBoxModel<>(new String[] {"Ninguna", "IMAP", "SMTP"}));
-		cbxConnections.setBounds(193, 77, 132, 22);
+		cbxConnections.setBounds(10, 64, 116, 22);
 		contentPane.add(cbxConnections);
 		
 		txtHost = new JTextField();
-		txtHost.setEnabled(false);
-		txtHost.setVisible(false);
-		txtHost.setBounds(361, 75, 116, 27);
+		txtHost.setBounds(10, 124, 116, 27);
 		contentPane.add(txtHost);
 		txtHost.setColumns(10);
 		
 		lblHost = new JLabel("HOST");
-		lblHost.setEnabled(false);
-		lblHost.setVisible(false);
 		lblHost.setFont(new Font(FONT, Font.BOLD, 14));
-		lblHost.setBounds(399, 50, 46, 14);
+		lblHost.setBounds(20, 99, 39, 14);
 		contentPane.add(lblHost);
 		
 		lblPort = new JLabel("PORT");
-		lblPort.setEnabled(false);
-		lblPort.setVisible(false);
 		lblPort.setFont(new Font(FONT, Font.BOLD, 14));
-		lblPort.setBounds(535, 50, 46, 14);
+		lblPort.setBounds(162, 99, 39, 14);
 		contentPane.add(lblPort);
 		
 		txtPort = new JTextField();
-		txtPort.setVisible(false);
-		txtPort.setEnabled(false);
 		txtPort.setColumns(10);
-		txtPort.setBounds(495, 75, 116, 27);
+		txtPort.setBounds(152, 124, 90, 27);
 		contentPane.add(txtPort);
 		
 		btnConnect = new JButton("CONNECT");
-		btnConnect.setEnabled(false);
-		btnConnect.setVisible(false);
 		btnConnect.setFont(new Font(FONT, Font.BOLD, 14));
 		btnConnect.setBackground(SystemColor.scrollbar);
-		btnConnect.setBounds(631, 70, 115, 35);
+		btnConnect.setBounds(10, 332, 232, 35);
 		contentPane.add(btnConnect);
 		
 		btnAddNewClient = new JButton("ADD CLIENT");
-		btnAddNewClient.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 14));
+		btnAddNewClient.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
 		btnAddNewClient.setBackground(SystemColor.scrollbar);
-		btnAddNewClient.setBounds(631, 12, 115, 27);
+		btnAddNewClient.setBounds(136, 378, 106, 46);
 		contentPane.add(btnAddNewClient);
 		
 		if (user != null && user.getAdmin()) {
@@ -120,7 +117,40 @@ public class Home extends JFrame {
 		lblTitleWelcome.setBounds(10, 11, 306, 27);
 		contentPane.add(lblTitleWelcome);
 		
-		newConfigButton = new NewConfigButton(this);
+		txtMailPswd = new JTextField();
+		txtMailPswd.setColumns(10);
+		txtMailPswd.setBounds(10, 294, 232, 27);
+		contentPane.add(txtMailPswd);
+		
+		JLabel lblUserMailPswd = new JLabel("PSWD");
+		lblUserMailPswd.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 14));
+		lblUserMailPswd.setBounds(26, 269, 32, 14);
+		contentPane.add(lblUserMailPswd);
+		
+		JLabel lblUserMail = new JLabel("MAIL");
+		lblUserMail.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 14));
+		lblUserMail.setBounds(26, 206, 46, 14);
+		contentPane.add(lblUserMail);
+		
+		JComboBox<String> cbxMailConnections = new JComboBox<>();
+		cbxMailConnections.setModel(new DefaultComboBoxModel<>(new String[] {"Ninguna"}));
+		cbxMailConnections.setBounds(10, 175, 232, 22);
+		contentPane.add(cbxMailConnections);
+		
+		txtMail = new JTextField();
+		txtMail.setColumns(10);
+		txtMail.setBounds(10, 231, 232, 27);
+		contentPane.add(txtMail);
+		
+		imapConnectionsMap = new HashMap<>();
+        fillComboBox(user.getConnections(), cbxMailConnections);
+
+        ComboBoxSelectionConnectionButton actionListener = new ComboBoxSelectionConnectionButton(
+            cbxMailConnections, txtMail, txtMailPswd, imapConnectionsMap
+        );
+        cbxMailConnections.addActionListener(actionListener);
+		
+		newConfigButton = new NewConfigButton(user);
 		btnNewConfg.addActionListener(newConfigButton);
 		
 		addNewClient = new AddNewClientButton();
@@ -129,22 +159,17 @@ public class Home extends JFrame {
 		boxSelectionButton = new ComboBoxSelectionButton(cbxConnections, txtHost, txtPort);
 		cbxConnections.addActionListener(boxSelectionButton);
 		
+		connectionButton = new ConnectionButton(txtHost, txtPort, txtMail, txtMailPswd);
+		btnConnect.addActionListener(connectionButton);
+		
 	}
 	
-	public void showConnectionFields(boolean show) {
-	    lblHost.setEnabled(show);
-	    lblPort.setEnabled(show);
-	    cbxConnections.setEnabled(show);
-	    txtPort.setEnabled(show);
-	    txtHost.setEnabled(show);
-	    btnConnect.setEnabled(show);
-	    
-	    lblHost.setVisible(show);
-	    lblPort.setVisible(show);
-	    cbxConnections.setVisible(show);
-	    txtPort.setVisible(show);
-	    txtHost.setVisible(show);
-	    btnConnect.setVisible(show);
-	}
-
+	public void fillComboBox(List<IMAPConnection> connectionsList, JComboBox<String> comboBox){
+        comboBox.removeAllItems();
+        
+        for (IMAPConnection connection : connectionsList) {
+            comboBox.addItem(connection.getEmail());
+            imapConnectionsMap.put(connection.getEmail(), connection);
+        }
+    }
 }
