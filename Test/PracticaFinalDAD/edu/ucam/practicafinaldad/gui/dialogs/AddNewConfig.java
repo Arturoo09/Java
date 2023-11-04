@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import edu.ucam.practicafinaldad.back.User;
+import edu.ucam.practicafinaldad.gui.Home;
 import edu.ucam.practicafinaldad.gui.buttons.AddNewConfigButton;
 
 import javax.swing.JLabel;
@@ -30,7 +31,7 @@ public class AddNewConfig extends JDialog {
 	/**
 	 * Create the AddNewConfig.
 	 */
-	public AddNewConfig(User user) {
+	public AddNewConfig(User user, Home home) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\34625\\Imágenes\\logoDAD.png"));
 		setTitle("NEW CONFIG");
 		setBounds(100, 100, 216, 209);
@@ -83,7 +84,7 @@ public class AddNewConfig extends JDialog {
 		cancelButton.setBounds(93, 11, 87, 34);
 		buttonPane.add(cancelButton);
 		
-		addNewConfigButton = new AddNewConfigButton(this, txtMail, txtMailPswd, user);
+		addNewConfigButton = new AddNewConfigButton(this, txtMail, txtMailPswd, user, home);
 		btnAdd.addActionListener(addNewConfigButton);
 	}
 }

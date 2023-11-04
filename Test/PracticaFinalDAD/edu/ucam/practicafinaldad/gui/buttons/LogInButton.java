@@ -7,16 +7,15 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 
 import edu.ucam.practicafinaldad.back.User;
 import edu.ucam.practicafinaldad.back.Manager;
 import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
 import edu.ucam.practicafinaldad.gui.Home;
-import edu.ucam.practicafinaldad.gui.dialogs.InvalidCredentials;
 
 public class LogInButton implements ActionListener{
 
@@ -80,9 +79,9 @@ public class LogInButton implements ActionListener{
                     	        });
                     	    } else {
                     	        // Autenticación fallida, muestra un mensaje de error
-                    	        InvalidCredentials dialog = new InvalidCredentials();
-                    	        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                    	        dialog.setVisible(true);
+                    	    	JOptionPane.showMessageDialog(null, "Las credenciales son inválidas.", "Error", JOptionPane.ERROR_MESSAGE);
+                    	    	txtUsername.setText("");
+                            	txtPassword.setText("");
                     	    }
                     	} catch (SQLException ex) {
                     	    ex.printStackTrace();
@@ -91,9 +90,9 @@ public class LogInButton implements ActionListener{
                 });
             } else {
             	// Abre un Warning Dialog
-                InvalidCredentials dialog = new InvalidCredentials();
-    			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    			dialog.setVisible(true);
+            	JOptionPane.showMessageDialog(null, "Las credenciales son inválidas.", "Error", JOptionPane.ERROR_MESSAGE);
+            	txtUsername.setText("");
+            	txtPassword.setText("");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

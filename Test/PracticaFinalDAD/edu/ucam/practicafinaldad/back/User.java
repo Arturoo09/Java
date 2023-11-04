@@ -60,4 +60,16 @@ public class User {
     public void addImapConnection(IMAPConnection connection) {
         this.connections.add(connection);
     }
+    
+    @Override
+    public String toString() {
+        return "User{" +
+               "id='" + id + '\'' +
+               ", username='" + username + '\'' +
+               ", password='" + password + '\'' + // Posiblemente quieras omitir esto por seguridad
+               ", admin=" + admin +
+               ", connections=" + connections +
+               '}';
+    }
+
 }

@@ -1,66 +1,91 @@
 package edu.ucam.practicafinaldad.back.Threads;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
+import javax.swing.JLabel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
 
-public class MailConnectionThread extends Thread{
-	
-	private String host;
-	private int port;
-	private String email;
-	private String password;
+import edu.ucam.practicafinaldad.back.Email;
+import edu.ucam.practicafinaldad.back.MailConnections.IMAPConnection;
+import edu.ucam.practicafinaldad.gui.Table.EmailTableModel;
 
-    public MailConnectionThread(String host, int port, String email, String password) {
+
+public class MailConnectionThread extends Thread {
+
+    private String host;
+    private int port;
+    private String email;
+    private String password;
+    private List<Email> emailList = new ArrayList<>();
+    private EmailTableModel tableModel;
+    private JProgressBar progressBar;
+    private JLabel lblStatus;
+    private int amount;
+
+    public MailConnectionThread(String host, int port, String email, String password, EmailTableModel tableModel, JProgressBar progressBar, JLabel lblStatus, int amount) {
         this.email = email;
         this.password = password;
         this.host = host;
         this.port = port;
+        this.tableModel = tableModel;
+        this.progressBar = progressBar;
+        this.lblStatus = lblStatus;
+        this.amount = amount;
     }
-	
-	@Override
-	public void run() {
-		
-		SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        try (SSLSocket sc = (SSLSocket) sslSocketFactory.createSocket(host, port)) {
-            System.out.println("[OK]");
-            System.out.println("Connecting to mail with IMAP using: " + email);
+
+    private void addEmailToList(Email email) {
+        this.emailList.add(email);
+    }
+
+    @Override
+    public void run() {
+        IMAPConnection imapConnection = new IMAPConnection(-1, "", this.email, this.password);
+        imapConnection.setHost(host);
+        imapConnection.setPort(port);
+        try {
+            imapConnection.connect();
+            System.out.println("Server Greeting: " + imapConnection.getGreeting());
+            imapConnection.login(email, password);
+            lblStatus.setText("[*] LOGIN SUCCESSFUL");
             
-            InputStream inputStream = sc.getInputStream();
-            OutputStream outputStream = sc.getOutputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            PrintWriter writer = new PrintWriter(outputStream, true);
-
-            // Use a unique tag for the LOGIN command
-            writer.println("A001 LOGIN " + this.email + " " + this.password);
+            imapConnection.selectMailbox("INBOX");
+            String[] emailIds = imapConnection.fetchEmailIDs();
             
-            String response = reader.readLine();
-            System.out.println("Login Response: " + response);
+            Collections.reverse(Arrays.asList(emailIds));
 
-            // Successfully logged in
-            System.out.println(response);
+            int emailCount = Math.min(amount, emailIds.length);
+            progressBar.setMinimum(0);
+            progressBar.setMaximum(emailCount - 1); 
+            progressBar.setValue(0);
 
-            // Use another unique tag for the SELECT command
-            writer.println("A002 SELECT INBOX");
-            response = reader.readLine();
-            System.out.println("SELECT Response: " + response);
+            for (int i = 0; i < emailCount; i++) {
+            	String emailId = emailIds[i];
+                lblStatus.setText("[*] GETTING THE EMAILS...");
 
-            // Fetch the list of message IDs (this example fetches the first 100 emails)
-            writer.println("A003 FETCH 1:100 (UID BODY[HEADER])");
-            String line;
-            while (!(line = reader.readLine()).equals(")")) {
-                System.out.println(line);
-                // You would parse the email headers and details here.
-                // Depending on the number of emails and their size, you might need to adjust this.
+                String emailSubject = imapConnection.fetchEmailSubject(emailId);
+                String emailBody = imapConnection.fetchEmailBody(emailId);
+
+                Email email = new Email(emailSubject, emailBody);
+                addEmailToList(email);
+                SwingUtilities.invokeLater(() -> progressBar.setValue(progressBar.getValue() + 1));
             }
 
+            tableModel.setData(this.emailList);
+            
+            imapConnection.logout();
+            System.out.println("LOGOUT");
+            lblStatus.setText("[*] LOGOUT");
+            SwingUtilities.invokeLater(() -> progressBar.setValue(0));
+
+            imapConnection.close();
+
         } catch (Exception e) {
+            lblStatus.setText("HA SURGIDO UN ERROR EN LA CAPTURA DE EMAILS...");
             e.printStackTrace();
         }
-	}
+    }
 }
