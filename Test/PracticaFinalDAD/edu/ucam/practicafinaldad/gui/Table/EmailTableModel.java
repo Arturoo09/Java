@@ -46,5 +46,9 @@ public class EmailTableModel extends AbstractTableModel {
         this.data = data;
         fireTableDataChanged();
     }
-
+    
+    public void removeRow(int row) {
+        data.remove(row);
+        fireTableRowsDeleted(row, row);
+    }
 }

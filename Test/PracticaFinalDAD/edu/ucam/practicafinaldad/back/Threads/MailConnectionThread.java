@@ -60,7 +60,7 @@ public class MailConnectionThread extends Thread {
                 String emailSubject = imapConnection.fetchEmailSubject(emailId);
                 String emailBody = imapConnection.fetchEmailBody(emailId);
 
-                Email email = new Email(emailSubject, emailBody);
+                Email email = new Email(emailId, emailSubject, emailBody);
                 addEmailToList(email);
                 SwingUtilities.invokeLater(() -> progressBar.setValue(progressBar.getValue() + 1));
             }

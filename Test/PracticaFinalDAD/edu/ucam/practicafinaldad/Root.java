@@ -5,7 +5,6 @@ import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
 import edu.ucam.practicafinaldad.gui.LogIn;
 
 public class Root {
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

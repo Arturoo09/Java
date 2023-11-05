@@ -241,7 +241,7 @@ public class Home extends JFrame {
 		previewEmailButton = new PreviewEmailButton(emailTable, tableModel);
 		btnPreview.addActionListener(previewEmailButton);
 		
-		deleteEmailButton = new DeleteEmailButton();
+		deleteEmailButton = new DeleteEmailButton(emailTable, tableModel, txtMail, user, lblStatus);
 		btnDelete.addActionListener(deleteEmailButton);
 		
 		// -------------------------------------------------------------------------------------------
