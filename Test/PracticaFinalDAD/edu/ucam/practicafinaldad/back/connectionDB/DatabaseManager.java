@@ -38,6 +38,36 @@ public class DatabaseManager implements IDatabaseManager{
 	    return false;
 	}
 	
+	public void ensureAdminUserExists() throws SQLException {
+	    // Verifica si existe el usuario admin con la contraseña admin
+	    if (!checkCredentials("admin", "admin")) {
+	        // Si no existe, crea el usuario admin
+	        List<String> columns = new ArrayList<>();
+	        columns.add("id");
+	        columns.add("username");
+	        columns.add("password");
+	        columns.add("admin");
+
+	        List<Object> values = new ArrayList<>();
+	        // Se asume que la ID debe ser única y se generará aleatoriamente o será fija para el usuario admin.
+	        // Aquí se pone un ejemplo con un UUID aleatorio. Esto podría ser un valor fijo también.
+	        values.add("0");
+	        values.add("admin");
+	        values.add("admin");
+	        values.add(true); // suponiendo que el campo `admin` es un booleano que indica si es admin o no.
+
+	        int result = insert("users", columns, values);
+
+	        if (result > 0) {
+	            System.out.println("El usuario admin ha sido creado con éxito.");
+	        } else {
+	            System.out.println("No se ha podido crear el usuario admin.");
+	        }
+	    } else {
+	        System.out.println("El usuario admin ya existe.");
+	    }
+	}
+	
 	// Método para insertar datos
 	@Override
 	public int insert(String table, List<String> columns, List<Object> values) throws SQLException {

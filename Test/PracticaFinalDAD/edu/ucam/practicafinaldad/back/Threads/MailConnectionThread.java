@@ -16,21 +16,15 @@ import edu.ucam.practicafinaldad.gui.Table.EmailTableModel;
 
 public class MailConnectionThread extends Thread {
 
-    private String host;
-    private int port;
-    private String email;
-    private String password;
+    private IMAPConnection imapConnection;
     private List<Email> emailList = new ArrayList<>();
     private EmailTableModel tableModel;
     private JProgressBar progressBar;
     private JLabel lblStatus;
     private int amount;
 
-    public MailConnectionThread(String host, int port, String email, String password, EmailTableModel tableModel, JProgressBar progressBar, JLabel lblStatus, int amount) {
-        this.email = email;
-        this.password = password;
-        this.host = host;
-        this.port = port;
+    public MailConnectionThread(IMAPConnection imapConnection, EmailTableModel tableModel, JProgressBar progressBar, JLabel lblStatus, int amount) {
+        this.imapConnection = imapConnection;
         this.tableModel = tableModel;
         this.progressBar = progressBar;
         this.lblStatus = lblStatus;
@@ -43,13 +37,10 @@ public class MailConnectionThread extends Thread {
 
     @Override
     public void run() {
-        IMAPConnection imapConnection = new IMAPConnection(-1, "", this.email, this.password);
-        imapConnection.setHost(host);
-        imapConnection.setPort(port);
         try {
             imapConnection.connect();
             System.out.println("Server Greeting: " + imapConnection.getGreeting());
-            imapConnection.login(email, password);
+            imapConnection.login(imapConnection.getEmail(), imapConnection.getPswdMail());
             lblStatus.setText("[*] LOGIN SUCCESSFUL");
             
             imapConnection.selectMailbox("INBOX");

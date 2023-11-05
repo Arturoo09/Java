@@ -3,20 +3,20 @@ package edu.ucam.practicafinaldad.gui.buttons;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JCheckBox;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import edu.ucam.practicafinaldad.back.Manager;
+import edu.ucam.practicafinaldad.back.User;
 import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
-import edu.ucam.practicafinaldad.gui.dialogs.AddNewClient;
+import edu.ucam.practicafinaldad.gui.Table.UserTableModel;
 
 public class CreateNewClientButton implements ActionListener {
-	
-	private AddNewClient addNewClient;
+
 	private DatabaseManager dbManager;
 	private Manager userManager;
 	private JTextField txtUsername;
@@ -24,15 +24,15 @@ public class CreateNewClientButton implements ActionListener {
 	private JCheckBox chkbxIsAdmin;
 	private String username;
 	private String passwd;
+	private JTable userTable;
 	private int id;
-	private int isAdmin;
+	private String id_str;
+	private boolean isAdmin;
 	private String table = "users";
 	private List<String> columns = Arrays.asList("id", "username", "password", "admin");
-	private List<Object> values = new ArrayList<>();
 	
-	
-	public CreateNewClientButton(AddNewClient addNewClient, JTextField txtUsername, JTextField txtPassword, JCheckBox chkbxIsAdmin) {
-		this.addNewClient = addNewClient;
+	public CreateNewClientButton(JTable userTable, JTextField txtUsername, JTextField txtPassword, JCheckBox chkbxIsAdmin) {
+		this.userTable = userTable;
 		this.txtUsername = txtUsername;
 		this.txtPassword = txtPassword;
 		this.chkbxIsAdmin = chkbxIsAdmin;
@@ -50,31 +50,23 @@ public class CreateNewClientButton implements ActionListener {
 		
 		this.username = txtUsername.getText();
 		this.passwd = txtPassword.getText();
-		
-		if (chkbxIsAdmin.isSelected()) {
-			isAdmin = 1;
-		} else {
-			isAdmin = 0;
-		}
+		this.isAdmin = chkbxIsAdmin.isSelected();
 		
 		try {
-			this.id = this.userManager.generateID();
+            // Asegúrate de que generateID() devuelve un String
+            this.id = this.userManager.generateID(); 
+            this.id_str = Integer.toString(id);
+            List<Object> values = Arrays.asList(id, username, passwd, isAdmin ? 1 : 0); // Ajustar para la base de datos
+            
+            this.dbManager.insert(table, columns, values);
+            
+            // Actualizar la tabla con el nuevo usuario
+            User newUser = new User(id_str, username, passwd, isAdmin);
+            ((UserTableModel) userTable.getModel()).addData(newUser);
+            
 		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		
-		values.add(id);
-		values.add(username);
-		values.add(passwd);
-		values.add(isAdmin);
-		
-		try {
-			this.dbManager.insert(table, columns, values);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		
-		this.addNewClient.dispose();
+            e1.printStackTrace();
+        }
 	}
-
+		
 }

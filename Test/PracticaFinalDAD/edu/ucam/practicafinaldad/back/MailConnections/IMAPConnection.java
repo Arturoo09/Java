@@ -16,7 +16,15 @@ public class IMAPConnection extends Connections {
         super(userId, email, pswdMail);
         this.imapId = imapId;
     }
-
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public String getPswdMail() {
+        return pswdMail;
+    }
+    
 	public String getHost() {
 		return host;
 	}
@@ -82,6 +90,21 @@ public class IMAPConnection extends Connections {
             sb.append(line).append("\n");
         }
         return sb.toString().trim();
+    }
+    
+    public void deleteEmail(String emailId) throws IOException {
+        // Marca el email como eliminado
+        writer.println("A7 STORE " + emailId + " +FLAGS (\\Deleted)");
+        String response;
+        while (!(response = reader.readLine()).startsWith("A7")) {
+            System.out.println("Server Response (DELETE MARK): " + response);
+        }
+
+        // Expulsa el email marcado como eliminado
+        writer.println("A8 EXPUNGE");
+        while (!(response = reader.readLine()).startsWith("A8")) {
+            System.out.println("Server Response (EXPUNGE): " + response);
+        }
     }
 
     public void logout() {

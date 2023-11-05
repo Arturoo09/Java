@@ -9,7 +9,7 @@ import edu.ucam.practicafinaldad.back.Email;
 public class EmailTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private final String[] columnNames = {"Subject"};
+	private final String[] columnNames = {"Email Subject"};
     
 	private List<Email> data;
 

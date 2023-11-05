@@ -19,16 +19,8 @@ public abstract class Connections {
         this.userId = userId;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPswdMail() {
-        return pswdMail;
     }
 
     public void setPswdMail(String pswdMail) {

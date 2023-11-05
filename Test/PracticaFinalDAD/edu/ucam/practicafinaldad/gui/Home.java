@@ -5,19 +5,18 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-import edu.ucam.practicafinaldad.back.Email;
 import edu.ucam.practicafinaldad.back.TextFieldsManager;
 import edu.ucam.practicafinaldad.back.User;
 import edu.ucam.practicafinaldad.back.MailConnections.IMAPConnection;
 import edu.ucam.practicafinaldad.gui.Table.EmailTableModel;
-import edu.ucam.practicafinaldad.gui.buttons.AddNewClientButton;
+import edu.ucam.practicafinaldad.gui.buttons.OpenUsersManagerButton;
 import edu.ucam.practicafinaldad.gui.buttons.ComboBoxSelectionButton;
 import edu.ucam.practicafinaldad.gui.buttons.ComboBoxSelectionConnectionButton;
 import edu.ucam.practicafinaldad.gui.buttons.ConnectionButton;
+import edu.ucam.practicafinaldad.gui.buttons.DeleteEmailButton;
 import edu.ucam.practicafinaldad.gui.buttons.NewConfigButton;
+import edu.ucam.practicafinaldad.gui.buttons.PreviewEmailButton;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -25,7 +24,6 @@ import java.awt.SystemColor;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -36,7 +34,6 @@ import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JProgressBar;
 
 public class Home extends JFrame {
@@ -50,11 +47,11 @@ public class Home extends JFrame {
 	private JLabel lblHost;
 	private JButton btnConnect;
 	private JComboBox<String> cbxConnections;
-	private JButton btnAddNewClient;
+	private JButton btnUsers;
 	private JButton btnNewConfg;
 	private Map<String, IMAPConnection> imapConnectionsMap;
 	private NewConfigButton newConfigButton;
-	private AddNewClientButton addNewClient;
+	private OpenUsersManagerButton addNewClient;
 	private ComboBoxSelectionButton boxSelectionButton;
 	private ComboBoxSelectionConnectionButton cbxSelectionConnectionButton;
 	private JPasswordField txtMailPswd;
@@ -65,6 +62,14 @@ public class Home extends JFrame {
 	private JTable emailTable;
     private EmailTableModel tableModel;
     private JTextField txtAmount;
+    
+    // Entrega Final
+    private JButton btnPreview;
+    private PreviewEmailButton previewEmailButton;
+    private JButton btnDelete;
+    private DeleteEmailButton deleteEmailButton;
+    private JButton btnNewFolder;
+    private JButton btnListEmails;
 
 	/**
 	 * Create HOME.
@@ -74,7 +79,7 @@ public class Home extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\34625\\Imágenes\\logoDAD.png"));
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setBounds(100, 100, 802, 500);
+		setBounds(100, 100, 927, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -84,7 +89,7 @@ public class Home extends JFrame {
 		btnNewConfg = new JButton("NEW CONFIG ");
 		btnNewConfg.setBackground(SystemColor.scrollbar);
 		btnNewConfg.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
-		btnNewConfg.setBounds(10, 415, 116, 35);
+		btnNewConfg.setBounds(10, 415, 232, 35);
 		contentPane.add(btnNewConfg);
 		
 		cbxConnections = new JComboBox<>();
@@ -115,23 +120,21 @@ public class Home extends JFrame {
 		btnConnect = new JButton("CONNECT");
 		btnConnect.setFont(new Font(FONT, Font.BOLD, 14));
 		btnConnect.setBackground(SystemColor.scrollbar);
-		btnConnect.setBounds(10, 369, 232, 35);
+		btnConnect.setBounds(10, 369, 232, 41);
 		contentPane.add(btnConnect);
 		
-		btnAddNewClient = new JButton("ADD CLIENT");
-		btnAddNewClient.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
-		btnAddNewClient.setBackground(SystemColor.scrollbar);
-		btnAddNewClient.setBounds(136, 415, 106, 35);
-		contentPane.add(btnAddNewClient);
+		btnUsers = new JButton("USERS");
+		btnUsers.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
+		btnUsers.setBackground(SystemColor.scrollbar);
+		btnUsers.setBounds(786, 269, 116, 118);
+		contentPane.add(btnUsers);
 		
 		if (user != null && user.getAdmin()) {
-			btnAddNewClient.setEnabled(true);
-			btnAddNewClient.setVisible(true);
+			btnUsers.setEnabled(true);
+			btnUsers.setVisible(true);
         } else {
-        	btnAddNewClient.setEnabled(false);
-            btnAddNewClient.setVisible(false);
-            
-            btnNewConfg.setBounds(10, 389, 232, 35);
+        	btnUsers.setEnabled(false);
+            btnUsers.setVisible(false);
         }
 		
 		JLabel lblTitleWelcome = new JLabel("Bienvenido " + user.getUsername());
@@ -166,7 +169,7 @@ public class Home extends JFrame {
 		
 		JLabel lblNumEmails = new JLabel("AMOUNT");
 		lblNumEmails.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 14));
-		lblNumEmails.setBounds(84, 332, 58, 26);
+		lblNumEmails.setBounds(92, 332, 58, 26);
 		contentPane.add(lblNumEmails);
 		
 		lblStatus = new JLabel("[*] NOT CONNECT...");
@@ -194,22 +197,54 @@ public class Home extends JFrame {
 		newConfigButton = new NewConfigButton(user, this);
 		btnNewConfg.addActionListener(newConfigButton);
 		
-		addNewClient = new AddNewClientButton();
-		btnAddNewClient.addActionListener(addNewClient);
+		addNewClient = new OpenUsersManagerButton();
+		btnUsers.addActionListener(addNewClient);
 		
 		boxSelectionButton = new ComboBoxSelectionButton(cbxConnections, txtHost, txtPort);
 		cbxConnections.addActionListener(boxSelectionButton);
 		
 		textFieldsManager = new TextFieldsManager(txtHost, txtPort, txtMail, txtMailPswd, txtAmount);
-		connectionButton = new ConnectionButton(textFieldsManager, tableModel, progressBar, lblStatus);
+		connectionButton = new ConnectionButton(user, textFieldsManager, tableModel, progressBar, lblStatus);
 		btnConnect.addActionListener(connectionButton);
 		
 		emailTable = new JTable(tableModel);
-		configureTableSelectionListener(emailTable, tableModel);
 		JScrollPane scrollPane = new JScrollPane(emailTable);
 		scrollPane.setBounds(252, 49, 524, 343);
 		contentPane.add(scrollPane);
 		
+		// BOTONES ENTREGA FINAL 
+		// -------------------------------------------------------------------------------------------
+		btnPreview = new JButton("PREVIEW");
+		btnPreview.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
+		btnPreview.setBackground(SystemColor.scrollbar);
+		btnPreview.setBounds(786, 52, 116, 35);
+		contentPane.add(btnPreview);
+		
+		btnDelete = new JButton("DELETE");
+		btnDelete.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
+		btnDelete.setBackground(SystemColor.scrollbar);
+		btnDelete.setBounds(786, 99, 116, 35);
+		contentPane.add(btnDelete);
+		
+		btnNewFolder = new JButton("NEW FOLDER");
+		btnNewFolder.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
+		btnNewFolder.setBackground(SystemColor.scrollbar);
+		btnNewFolder.setBounds(786, 145, 116, 35);
+		contentPane.add(btnNewFolder);
+		
+		btnListEmails = new JButton("LIST EMAILS");
+		btnListEmails.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
+		btnListEmails.setBackground(SystemColor.scrollbar);
+		btnListEmails.setBounds(786, 191, 116, 35);
+		contentPane.add(btnListEmails);
+		
+		previewEmailButton = new PreviewEmailButton(emailTable, tableModel);
+		btnPreview.addActionListener(previewEmailButton);
+		
+		deleteEmailButton = new DeleteEmailButton();
+		btnDelete.addActionListener(deleteEmailButton);
+		
+		// -------------------------------------------------------------------------------------------
 	}
 	
 	public void fillComboBox(List<IMAPConnection> connectionsList, JComboBox<String> comboBox){
@@ -219,34 +254,5 @@ public class Home extends JFrame {
             comboBox.addItem(connection.getEmail());
             imapConnectionsMap.put(connection.getEmail(), connection);
         }
-    }
-	
-    public void configureTableSelectionListener(JTable table, EmailTableModel tableModel) {
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting()) {
-                    int selectedRow = table.getSelectedRow();
-                    if (selectedRow >= 0) {
-                        Email selectedEmail = tableModel.getEmailAt(selectedRow);
-                        if (selectedEmail != null) {
-                            showEmailDialog(selectedEmail);
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    public void showEmailDialog(Email email) {
-        JTextArea textArea = new JTextArea(10, 40);
-        textArea.setText("Subject: " + email.getSubject() + "\n\n" + email.getBody());
-        textArea.setWrapStyleWord(true); // activar el salto de palabras
-        textArea.setLineWrap(true); // activar el salto de línea
-        textArea.setCaretPosition(0); // poner el cursor al principio del texto
-        textArea.setEditable(false); // hacer que el área de texto no sea editable
-        
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        JOptionPane.showMessageDialog(this, scrollPane, "Email Details", JOptionPane.INFORMATION_MESSAGE);
     }
 }

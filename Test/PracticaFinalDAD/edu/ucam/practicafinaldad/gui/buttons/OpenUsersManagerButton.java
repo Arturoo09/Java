@@ -2,16 +2,22 @@ package edu.ucam.practicafinaldad.gui.buttons;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.WindowConstants;
 
-import edu.ucam.practicafinaldad.gui.dialogs.AddNewClient;
+import edu.ucam.practicafinaldad.gui.dialogs.UsersManager;
 
-public class AddNewClientButton implements ActionListener {
+public class OpenUsersManagerButton implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		AddNewClient dialog = new AddNewClient();
+		UsersManager dialog = null;
+		try {
+			dialog = new UsersManager();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);
 	}
