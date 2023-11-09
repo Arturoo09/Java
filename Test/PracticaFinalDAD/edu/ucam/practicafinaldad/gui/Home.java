@@ -126,7 +126,7 @@ public class Home extends JFrame {
 		btnUsers = new JButton("USERS");
 		btnUsers.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
 		btnUsers.setBackground(SystemColor.scrollbar);
-		btnUsers.setBounds(786, 269, 116, 118);
+		btnUsers.setBounds(786, 304, 116, 146);
 		contentPane.add(btnUsers);
 		
 		if (user != null && user.getAdmin()) {
@@ -139,7 +139,7 @@ public class Home extends JFrame {
 		
 		JLabel lblTitleWelcome = new JLabel("Bienvenido " + user.getUsername());
 		lblTitleWelcome.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 18));
-		lblTitleWelcome.setBounds(10, 11, 766, 27);
+		lblTitleWelcome.setBounds(10, 11, 310, 27);
 		contentPane.add(lblTitleWelcome);
 		
 		txtMailPswd = new JPasswordField();
@@ -217,25 +217,25 @@ public class Home extends JFrame {
 		btnPreview = new JButton("PREVIEW");
 		btnPreview.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
 		btnPreview.setBackground(SystemColor.scrollbar);
-		btnPreview.setBounds(786, 52, 116, 35);
+		btnPreview.setBounds(786, 65, 116, 35);
 		contentPane.add(btnPreview);
 		
 		btnDelete = new JButton("DELETE");
 		btnDelete.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
 		btnDelete.setBackground(SystemColor.scrollbar);
-		btnDelete.setBounds(786, 99, 116, 35);
+		btnDelete.setBounds(786, 125, 116, 35);
 		contentPane.add(btnDelete);
 		
 		btnNewFolder = new JButton("NEW FOLDER");
 		btnNewFolder.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
 		btnNewFolder.setBackground(SystemColor.scrollbar);
-		btnNewFolder.setBounds(786, 145, 116, 35);
+		btnNewFolder.setBounds(786, 185, 116, 35);
 		contentPane.add(btnNewFolder);
 		
 		btnListEmails = new JButton("LIST EMAILS");
 		btnListEmails.setFont(new Font("Hack Nerd Font Propo", Font.BOLD, 12));
 		btnListEmails.setBackground(SystemColor.scrollbar);
-		btnListEmails.setBounds(786, 191, 116, 35);
+		btnListEmails.setBounds(786, 245, 116, 35);
 		contentPane.add(btnListEmails);
 		
 		previewEmailButton = new PreviewEmailButton(emailTable, tableModel);
