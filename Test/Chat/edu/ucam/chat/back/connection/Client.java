@@ -35,5 +35,4 @@ public class Client extends Connection{
             System.out.println(e);
         }
     }
-
 }
