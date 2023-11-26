@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class MySQLConnection {
 	
 	private static final String JDBC_URL = "jdbc:mysql://us-east.connect.psdb.cloud/dad_database";
-    private static final String JDBC_USER = "si1csxqtsm76anjcnd6b";
-    private static final String JDBC_PASSWORD = "pscale_pw_YaPNnL3C8gPgYQeQqHlnmUR488gW7tjhevuORSjiWke";
+    private static final String JDBC_USER = "hh7svrsxx6awmvprhqtf";
+    private static final String JDBC_PASSWORD = "pscale_pw_MHmXsjKBL8F2LO9PfKtZB7Dxgv3C9IQcSflfv95MHz7";
     
     private Connection connection;
     
