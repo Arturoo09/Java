@@ -20,6 +20,10 @@
 	<classpathentry kind="src" path="exam"/>
 	<classpathentry kind="src" path="Exam2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/34625/Downloads/mysql-connector-j-8.1.0.zip"/>
+	<classpathentry kind="lib" path="C:/Users/34625/Downloads/mysql-connector-j-8.1.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

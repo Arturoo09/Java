@@ -16,7 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.ucam.practicafinaldad.back.User;
-import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
+import edu.ucam.practicafinaldad.back.connectionDB.MySQL.DatabaseManager;
 import edu.ucam.practicafinaldad.gui.Table.UserTableModel;
 import edu.ucam.practicafinaldad.gui.buttons.CreateNewClientButton;
 import edu.ucam.practicafinaldad.gui.buttons.DeleteUserButton;

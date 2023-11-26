@@ -8,7 +8,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
+import edu.ucam.practicafinaldad.back.connectionDB.MySQL.DatabaseManager;
 import edu.ucam.practicafinaldad.gui.Table.UserTableModel;
 
 public class DeleteUserButton implements ActionListener {

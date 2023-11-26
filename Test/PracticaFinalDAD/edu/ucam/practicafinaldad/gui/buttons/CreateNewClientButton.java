@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 import edu.ucam.practicafinaldad.back.Manager;
 import edu.ucam.practicafinaldad.back.User;
-import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
+import edu.ucam.practicafinaldad.back.connectionDB.MySQL.DatabaseManager;
 import edu.ucam.practicafinaldad.gui.Table.UserTableModel;
 
 public class CreateNewClientButton implements ActionListener {

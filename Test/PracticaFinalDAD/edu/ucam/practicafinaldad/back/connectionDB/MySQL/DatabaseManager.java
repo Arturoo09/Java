@@ -1,4 +1,4 @@
-package edu.ucam.practicafinaldad.back.connectionDB;
+package edu.ucam.practicafinaldad.back.connectionDB.MySQL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

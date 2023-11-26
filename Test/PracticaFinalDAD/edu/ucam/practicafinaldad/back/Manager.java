@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.ucam.practicafinaldad.back.MailConnections.IMAPConnection;
-import edu.ucam.practicafinaldad.back.connectionDB.DatabaseManager;
+import edu.ucam.practicafinaldad.back.connectionDB.MySQL.DatabaseManager;
 
 public class Manager implements IManager{
 	

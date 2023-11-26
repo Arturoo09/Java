@@ -1,4 +1,4 @@
-package edu.ucam.practicafinaldad.back.connectionDB;
+package edu.ucam.practicafinaldad.back.connectionDB.MySQL;
 
 import java.sql.SQLException;
 import java.util.List;

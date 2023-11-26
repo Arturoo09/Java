@@ -1,4 +1,4 @@
-package edu.ucam.practicafinaldad.back.connectionDB;
+package edu.ucam.practicafinaldad.back.connectionDB.MySQL;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class MySQLConnection {
 	
-	private static final String JDBC_URL = "jdbc:mysql://localhost:3306/practica_final_dad";
-    private static final String JDBC_USER = "root";
-    private static final String JDBC_PASSWORD = "Root_69_";
+	private static final String JDBC_URL = "jdbc:mysql://us-east.connect.psdb.cloud/dad_database";
+    private static final String JDBC_USER = "si1csxqtsm76anjcnd6b";
+    private static final String JDBC_PASSWORD = "pscale_pw_YaPNnL3C8gPgYQeQqHlnmUR488gW7tjhevuORSjiWke";
     
     private Connection connection;
     
